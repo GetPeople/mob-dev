@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">GetPeople</string>
+    <string name="selamat_datang">Selamat datang di GetPeople</string>
+    <string name="button_masuk">Masuk</string>
+    <string name="button_daftar">Daftar</string>
+    <string name="signup_title">Daftar Sebagai Pengguna</string>
+    <string name="hint_name">Nama</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="login_title">Masuk aplikasi</string>
+</resources>
