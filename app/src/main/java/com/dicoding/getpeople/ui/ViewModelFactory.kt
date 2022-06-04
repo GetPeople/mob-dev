@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.model.UserPreference
+import com.dicoding.getpeople.ui.login.LoginViewModel
+import com.dicoding.getpeople.ui.maps.MapsViewModel
+import com.dicoding.getpeople.ui.signup.SignupViewModel
 import com.dicoding.getpeople.ui.welcome.WelcomeViewModel
 
 class ViewModelFactory(private val pref: UserPreference) :
@@ -11,10 +14,21 @@ class ViewModelFactory(private val pref: UserPreference) :
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(WelcomeViewModel::class.java)) {
-            return WelcomeViewModel(pref) as T
+        return when {
+            modelClass.isAssignableFrom(WelcomeViewModel::class.java) -> {
+                WelcomeViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
+                SignupViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
+                LoginViewModel(pref) as T
+            }
+            modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
+                MapsViewModel(pref) as T
+            }
+            else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
-        throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
     }
 
 //    companion object {

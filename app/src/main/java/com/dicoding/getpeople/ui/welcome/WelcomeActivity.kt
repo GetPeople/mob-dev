@@ -16,8 +16,11 @@ import com.dicoding.getpeople.databinding.ActivityWelcomeBinding
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
+import com.dicoding.getpeople.ui.login.LoginActivity
+import com.dicoding.getpeople.ui.maps.MapsActivity
+import com.dicoding.getpeople.ui.signup.SignupActivity
 
-private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class WelcomeActivity : AppCompatActivity() {
 
@@ -56,9 +59,7 @@ class WelcomeActivity : AppCompatActivity() {
 
         viewModel.getUser().observe(this) { user ->
             if (user.isLogin) {
-                this.user = user
-//                binding.welcomeUser.text = getString(R.string.welcome_user, user.name)
-//                setupRecyclerView()
+                startActivity(Intent(this, MapsActivity::class.java))
             }
         }
 
@@ -66,11 +67,11 @@ class WelcomeActivity : AppCompatActivity() {
 
     private fun setupAction() {
         binding.buttonLogin.setOnClickListener {
-            //startActivity(Intent(this, LoginActivity::class.java))
+            startActivity(Intent(this, LoginActivity::class.java))
         }
 
         binding.buttonSignup.setOnClickListener {
-            //startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, SignupActivity::class.java))
         }
     }
 }

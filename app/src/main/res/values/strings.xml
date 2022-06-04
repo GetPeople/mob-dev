@@ -8,4 +8,6 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="login_title">Masuk aplikasi</string>
+    <string name="title_activity_maps">Peta Bencana</string>
+    <string name="keluar">Keluar</string>
 </resources>
