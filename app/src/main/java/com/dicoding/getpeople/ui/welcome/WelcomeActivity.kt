@@ -11,14 +11,13 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.getpeople.R
 import com.dicoding.getpeople.databinding.ActivityWelcomeBinding
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.login.LoginActivity
 import com.dicoding.getpeople.ui.maps.MapsActivity
-import com.dicoding.getpeople.ui.signup.SignupActivity
+import com.dicoding.getpeople.ui.signup.SignupPenggunaActivity
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -71,7 +70,7 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
         binding.buttonSignup.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
+            startActivity(Intent(this, ChooseRoleActivity::class.java))
         }
     }
 }

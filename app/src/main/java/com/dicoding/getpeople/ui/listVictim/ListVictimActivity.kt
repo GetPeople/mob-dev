@@ -12,6 +12,7 @@ import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.findVictim.FindVictimViewModel
 import com.dicoding.getpeople.ui.maps.MapsActivity
+import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
 
 class ListVictimActivity : AppCompatActivity() {
@@ -53,5 +54,13 @@ class ListVictimActivity : AppCompatActivity() {
             this,
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[ListVictimViewModel::class.java]
+
+        listVictimViewModel.getUser().observe(this) { user ->
+            if (!user.isLogin) {
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }
     }
 }

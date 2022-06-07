@@ -29,4 +29,9 @@
     <string name="pilih_gambar">Pilih gambar...</string>
     <string name="izin_tidak_diberikan">Izin tidak diberikan</string>
     <string name="menu_cari_korban">Cari Korban</string>
+    <string name="daftar_sebagai">Daftar sebagai...</string>
+    <string name="pengguna">Pengguna</string>
+    <string name="petugas">Petugas</string>
+    <string name="signup_title_petugas">Daftar sebagai petugas</string>
+    <string name="hint_id">ID Petugas</string>
 </resources>

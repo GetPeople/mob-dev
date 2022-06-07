@@ -3,7 +3,9 @@
     package="com.dicoding.getpeople">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission android:name="android.permission.CAMERA" />
 
     <application
@@ -13,6 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GetPeople">
+        <activity
+            android:name=".ui.signup.SignupPetugasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.welcome.ChooseRoleActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.cameraActivity.CameraActivity"
             android:exported="false" />
@@ -54,7 +62,7 @@
             android:name=".ui.login.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.signup.SignupActivity"
+            android:name=".ui.signup.SignupPenggunaActivity"
             android:exported="false" />
         <activity
             android:name=".ui.welcome.WelcomeActivity"

@@ -16,7 +16,8 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
                 preferences[NAME_KEY] ?:"",
                 preferences[EMAIL_KEY] ?:"",
                 preferences[STATE_KEY] ?: false,
-                preferences[PASSWORD_KEY] ?: ""
+                preferences[PASSWORD_KEY] ?: "",
+                preferences[ROLE_KEY] ?: ""
             )
         }
     }
@@ -27,6 +28,7 @@ class UserPreference private constructor(private val dataStore: DataStore<Prefer
             preferences[EMAIL_KEY] = user.email
             preferences[PASSWORD_KEY] = user.password
             preferences[STATE_KEY] = user.isLogin
+            preferences[ROLE_KEY] = user.role
         }
     }
 

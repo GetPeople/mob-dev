@@ -8,21 +8,21 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.getpeople.databinding.ActivitySignupBinding
+import com.dicoding.getpeople.databinding.ActivitySignupPenggunaBinding
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.login.LoginActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
 
-class SignupActivity : AppCompatActivity() {
+class SignupPenggunaActivity : AppCompatActivity() {
 
     private lateinit var signupViewModel: SignupViewModel
-    private lateinit var binding : ActivitySignupBinding
+    private lateinit var binding : ActivitySignupPenggunaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignupBinding.inflate(layoutInflater)
+        binding = ActivitySignupPenggunaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupView()
@@ -66,12 +66,12 @@ class SignupActivity : AppCompatActivity() {
                     binding.textInputLayoutPassword.error = "Masukkan password"
                 }
                 else -> {
-                    signupViewModel.saveUser(UserModel(name, email,false, password))
+                    signupViewModel.saveUser(UserModel(name, email,false, password, "pengguna"))
                     AlertDialog.Builder(this).apply {
                         setTitle("Yeah!")
                         setMessage("Akun berhasil dibuat!")
                         setPositiveButton("Lanjut") { _, _ ->
-                            val intent = Intent(this@SignupActivity, LoginActivity::class.java)
+                            val intent = Intent(this@SignupPenggunaActivity, LoginActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                         }

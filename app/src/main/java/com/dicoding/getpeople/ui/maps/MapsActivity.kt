@@ -9,6 +9,7 @@ import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.R
 import com.dicoding.getpeople.databinding.ActivityMapsBinding
+import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.addVictim.AddVictimActivity
@@ -28,6 +29,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityMapsBinding
     private lateinit var mapsViewModel: MapsViewModel
+    private lateinit var user : UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,6 +69,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         )[MapsViewModel::class.java]
 
         mapsViewModel.getUser().observe(this) { user ->
+            this.user = user
             if (!user.isLogin) {
                 val intent = Intent(this, WelcomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -89,11 +92,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Add a marker in Sydney and move the camera
         val jakarta = LatLng(-6.2, 106.816)
-        val centerOfIndo = LatLng(-5.135, 119.42)
         mMap.addMarker(MarkerOptions().position(jakarta).title("Marker in Jakarta"))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(jakarta, 5f))
         mMap.setOnMarkerClickListener { _ ->
-            startActivity(Intent(this, FindVictimActivity::class.java))
+            if (user.role == "pengguna") {
+                startActivity(Intent(this, FindVictimActivity::class.java))
+            } else {
+                startActivity(Intent(this, AddVictimActivity::class.java))
+            }
             true
         }
     }
