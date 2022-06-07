@@ -23,4 +23,10 @@
     <string name="hint_ibu">Nama Ibu Kandung</string>
     <string name="desc_korban">Foto Korban</string>
     <string name="daftar_korban_subtitle">Berikut hasil yang paling sesuai</string>
+    <string name="menu_tambah_korban">Tambah Korban</string>
+    <string name="peta_bencana">Peta Bencana</string>
+    <string name="ambil_foto">Ambil Foto</string>
+    <string name="pilih_gambar">Pilih gambar...</string>
+    <string name="izin_tidak_diberikan">Izin tidak diberikan</string>
+    <string name="menu_cari_korban">Cari Korban</string>
 </resources>

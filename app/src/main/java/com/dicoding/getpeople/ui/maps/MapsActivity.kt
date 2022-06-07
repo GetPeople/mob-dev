@@ -11,6 +11,7 @@ import com.dicoding.getpeople.R
 import com.dicoding.getpeople.databinding.ActivityMapsBinding
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
+import com.dicoding.getpeople.ui.addVictim.AddVictimActivity
 import com.dicoding.getpeople.ui.findVictim.FindVictimActivity
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
@@ -44,6 +45,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.option_menu, menu)
+        val map = menu?.findItem(R.id.map_appbar)
+        map?.isVisible = false
         return true
     }
 
@@ -57,7 +60,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    fun setupViewModel() {
+    private fun setupViewModel() {
         mapsViewModel = ViewModelProvider(
             this,
             ViewModelFactory(UserPreference.getInstance(dataStore))
