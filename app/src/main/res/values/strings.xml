@@ -10,4 +10,17 @@
     <string name="login_title">Masuk aplikasi</string>
     <string name="title_activity_maps">Peta Bencana</string>
     <string name="keluar">Keluar</string>
+    <string name="cari_korban_title">Banjir Bandang</string>
+    <string name="cari_korban_subtitle">DKI Jakarta</string>
+    <string name="button_kirim">Kirim</string>
+    <string name="button_unggah">Unggah</string>
+    <string name="daftar_korban_title">Banjir Bandang, DKI Jakarta</string>
+    <string name="button_ambil">Ambil</string>
+    <string name="hint_nama">Nama Lengkap</string>
+    <string name="hint_lokasi">Lokasi Pengungsian</string>
+    <string name="hint_tanggal_lahir">Tanggal Lahir</string>
+    <string name="hint_nik">Nomor Induk Kependudukan</string>
+    <string name="hint_ibu">Nama Ibu Kandung</string>
+    <string name="desc_korban">Foto Korban</string>
+    <string name="daftar_korban_subtitle">Berikut hasil yang paling sesuai</string>
 </resources>

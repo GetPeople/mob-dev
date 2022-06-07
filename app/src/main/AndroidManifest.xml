@@ -10,6 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GetPeople">
         <activity
+            android:name=".ui.searchResult.SearchResultActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.detailVictim.DetailVictimActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.listVictim.ListVictimActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.addVictim.AddVictimActivity"
             android:exported="false" />
         <activity
