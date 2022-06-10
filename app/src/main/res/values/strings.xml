@@ -34,4 +34,11 @@
     <string name="petugas">Petugas</string>
     <string name="signup_title_petugas">Daftar sebagai petugas</string>
     <string name="hint_id">ID Petugas</string>
+    <string name="berhasil">Berhasil!</string>
+    <string name="gagal">Gagal!</string>
+    <string name="lanjut">Lanjut</string>
+    <string name="tutup">Tutup</string>
+    <string name="jangan_kosong">Tidak boleh kosong!</string>
+    <string name="min_enam">Minimal panjang 6 karakter</string>
+    <string name="email_tidak_valid">Email tidak valid</string>
 </resources>

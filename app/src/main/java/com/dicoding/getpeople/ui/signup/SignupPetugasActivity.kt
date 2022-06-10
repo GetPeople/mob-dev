@@ -4,14 +4,21 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Patterns
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
+import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.ViewModelProvider
+import com.dicoding.getpeople.R
+import com.dicoding.getpeople.data.Result
 import com.dicoding.getpeople.databinding.ActivitySignupPetugasBinding
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
+import com.dicoding.getpeople.ui.isEmailValid
 import com.dicoding.getpeople.ui.login.LoginActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
 
@@ -19,7 +26,6 @@ class SignupPetugasActivity : AppCompatActivity() {
 
     private lateinit var signupViewModel: SignupViewModel
     private lateinit var binding: ActivitySignupPetugasBinding
-    private val trueIdPetugas = "12345"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,44 +53,111 @@ class SignupPetugasActivity : AppCompatActivity() {
     private fun setupViewModel() {
         signupViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory()
         )[SignupViewModel::class.java]
     }
 
     private fun setupAction() {
+
+        binding.editTextName.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutName.error = null
+            } else {
+                if (binding.editTextName.text.toString() == "") {
+                    binding.textInputLayoutName.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutName.error = null
+                }
+            }
+        }
+
+        binding.editTextEmail.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutEmail.error = null
+            } else {
+                if (binding.editTextEmail.text.toString() == "") {
+                    binding.textInputLayoutEmail.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutEmail.error = null
+                }
+            }
+        }
+
+        binding.editTextPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutPassword.error = null
+            } else {
+                if (binding.editTextPassword.text.toString() == "") {
+                    binding.textInputLayoutPassword.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutPassword.error = null
+                }
+            }
+        }
+
+        binding.editTextId.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutId.error = null
+            } else {
+                if (binding.editTextId.text.toString() == "") {
+                    binding.textInputLayoutId.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutId.error = null
+                }
+            }
+        }
+
         binding.buttonSignup.setOnClickListener {
             val idPetugas = binding.editTextId.text.toString()
             val name = binding.editTextName.text.toString()
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
+
             when {
-                idPetugas.isEmpty() -> {
-                    binding.textInputLayoutId.error = "Masukkan ID petugas"
+                idPetugas.isEmpty() -> {}
+                name.isEmpty() -> {}
+                email.isEmpty() -> {}
+                password.isEmpty() -> {}
+                password.length < 6 -> {
+                    binding.textInputLayoutPassword.error = getString(R.string.min_enam)
                 }
-                name.isEmpty() -> {
-                    binding.textInputLayoutName.error = "Masukkan nama"
-                }
-                email.isEmpty() -> {
-                    binding.textInputLayoutEmail.error = "Masukkan email"
-                }
-                password.isEmpty() -> {
-                    binding.textInputLayoutPassword.error = "Masukkan password"
-                }
-                idPetugas != trueIdPetugas -> {
-                    binding.textInputLayoutId.error = "ID tidak valid"
+                !isEmailValid(email) -> {
+                    binding.textInputLayoutEmail.error = getString(R.string.email_tidak_valid)
                 }
                 else -> {
-                    signupViewModel.saveUser(UserModel(name, email,false, password, "petugas"))
-                    AlertDialog.Builder(this).apply {
-                        setTitle("Yeah!")
-                        setMessage("Akun berhasil dibuat!")
-                        setPositiveButton("Lanjut") { _, _ ->
-                            val intent = Intent(this@SignupPetugasActivity, LoginActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                            startActivity(intent)
+                    signupViewModel.register(name, email, password, "petugas", idPetugas).observe(this) { result ->
+                        if (result != null) {
+                            when(result) {
+                                is Result.Loading -> {
+                                    binding.progressBar.visibility = View.VISIBLE
+                                }
+                                is Result.Success -> {
+                                    binding.progressBar.visibility = View.GONE
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle(getString(R.string.berhasil))
+                                        setMessage(result.data)
+                                        setPositiveButton(getString(R.string.lanjut)) { _, _ ->
+                                            val intent = Intent(this@SignupPetugasActivity, LoginActivity::class.java)
+                                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            startActivity(intent)
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                                is Result.Error -> {
+                                    binding.progressBar.visibility = View.GONE
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle(getString(R.string.gagal))
+                                        setMessage(result.error)
+                                        setNegativeButton(getString(R.string.tutup)) { _, _ ->
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                            }
                         }
-                        create()
-                        show()
                     }
                 }
             }

@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
+import android.text.TextUtils
+import android.util.Patterns
 import com.dicoding.getpeople.R
 import java.io.*
 import java.text.SimpleDateFormat
@@ -83,4 +85,8 @@ fun reduceFileImage(file: File): File {
     } while (streamLength > 1000000)
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
     return file
+}
+
+fun isEmailValid(email: CharSequence) : Boolean{
+    return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
 }

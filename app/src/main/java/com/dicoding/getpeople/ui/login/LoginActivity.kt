@@ -8,10 +8,12 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import com.dicoding.getpeople.R
 import com.dicoding.getpeople.databinding.ActivityLoginBinding
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
+import com.dicoding.getpeople.ui.isEmailValid
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
 
@@ -56,21 +58,42 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setupAction() {
+
+        binding.editTextEmail.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutEmail.error = null
+            } else {
+                if (binding.editTextEmail.text.toString() == "") {
+                    binding.textInputLayoutEmail.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutEmail.error = null
+                }
+            }
+        }
+
+        binding.editTextPassword.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutPassword.error = null
+            } else {
+                if (binding.editTextPassword.text.toString() == "") {
+                    binding.textInputLayoutPassword.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutPassword.error = null
+                }
+            }
+        }
+
         binding.buttonLogin.setOnClickListener {
             val email = binding.editTextEmail.text.toString()
             val password = binding.editTextPassword.text.toString()
             when {
-                email.isEmpty() -> {
-                    binding.textInputLayoutEmail.error = "Masukkan email"
+                email.isEmpty() -> {}
+                password.isEmpty() -> {}
+                password.length < 6 -> {
+                    binding.textInputLayoutPassword.error = getString(R.string.min_enam)
                 }
-                password.isEmpty() -> {
-                    binding.textInputLayoutPassword.error = "Masukkan password"
-                }
-                email != user.email -> {
-                    binding.textInputLayoutEmail.error = "Email tidak sesuai"
-                }
-                password != user.password -> {
-                    binding.textInputLayoutPassword.error = "Password tidak sesuai"
+                !isEmailValid(email) -> {
+                    binding.textInputLayoutEmail.error = getString(R.string.email_tidak_valid)
                 }
                 else -> {
                     loginViewModel.login()
