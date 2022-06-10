@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.R
+import com.dicoding.getpeople.data.Result
 import com.dicoding.getpeople.databinding.ActivityLoginBinding
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
@@ -51,10 +53,6 @@ class LoginActivity : AppCompatActivity() {
             this,
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[LoginViewModel::class.java]
-
-        loginViewModel.getUser().observe(this) { user ->
-            this.user = user
-        }
     }
 
     private fun setupAction() {
@@ -96,18 +94,39 @@ class LoginActivity : AppCompatActivity() {
                     binding.textInputLayoutEmail.error = getString(R.string.email_tidak_valid)
                 }
                 else -> {
-                    loginViewModel.login()
-                    AlertDialog.Builder(this).apply {
-                        setTitle("Yeah!")
-                        setMessage("Anda berhasil login. Sudah tidak sabar untuk belajar ya?")
-                        setPositiveButton("Lanjut") { _, _ ->
-                            val intent = Intent(context, MapsActivity::class.java)
-                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
-                            startActivity(intent)
-                            finish()
+                    loginViewModel.login(email, password).observe(this) { loginResponse ->
+                        if (loginResponse != null) {
+                            when(loginResponse) {
+                                is Result.Loading -> {
+                                    binding.progressBar.visibility = View.VISIBLE
+                                }
+                                is Result.Success -> {
+                                    binding.progressBar.visibility = View.GONE
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle(getString(R.string.berhasil))
+                                        setMessage(loginResponse.data.message)
+                                        setPositiveButton(getString(R.string.lanjut)) { _, _ ->
+                                            val intent = Intent(this@LoginActivity, MapsActivity::class.java)
+                                            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                            startActivity(intent)
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                                is Result.Error -> {
+                                    binding.progressBar.visibility = View.GONE
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle(getString(R.string.gagal))
+                                        setMessage(loginResponse.error)
+                                        setNegativeButton(getString(R.string.tutup)) { _, _ ->
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                            }
                         }
-                        create()
-                        show()
                     }
                 }
             }

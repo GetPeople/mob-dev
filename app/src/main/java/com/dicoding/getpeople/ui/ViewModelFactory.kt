@@ -14,14 +14,8 @@ import com.dicoding.getpeople.ui.searchResult.SearchResultViewModel
 import com.dicoding.getpeople.ui.signup.SignupViewModel
 import com.dicoding.getpeople.ui.welcome.WelcomeViewModel
 
-class ViewModelFactory() :
+class ViewModelFactory(private val pref: UserPreference) :
     ViewModelProvider.NewInstanceFactory() {
-
-    private lateinit var pref : UserPreference
-
-    constructor(pref : UserPreference) : this() {
-        this.pref = pref
-    }
 
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -30,10 +24,10 @@ class ViewModelFactory() :
                 WelcomeViewModel(pref) as T
             }
             modelClass.isAssignableFrom(SignupViewModel::class.java) -> {
-                SignupViewModel(Injection.provideUserRepository()) as T
+                SignupViewModel(Injection.provideUserRepository(pref)) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(pref) as T
+                LoginViewModel(Injection.provideUserRepository(pref)) as T
             }
             modelClass.isAssignableFrom(MapsViewModel::class.java) -> {
                 MapsViewModel(pref) as T

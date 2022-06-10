@@ -21,14 +21,14 @@ data class LoginResponse(
 data class LoginResult(
 
 	@field:SerializedName("idUser")
-	val idUser: String? = null,
+	val idUser: String,
 
 	@field:SerializedName("role")
-	val role: String? = null,
+	val role: String,
 
 	@field:SerializedName("name")
-	val name: String? = null,
+	val name: String,
 
 	@field:SerializedName("token")
-	val token: String? = null
+	val token: String
 ) : Parcelable

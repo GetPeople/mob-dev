@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.TextUtils
-import android.util.Patterns
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -14,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.R
 import com.dicoding.getpeople.data.Result
 import com.dicoding.getpeople.databinding.ActivitySignupPenggunaBinding
-import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.isEmailValid
@@ -52,7 +49,7 @@ class SignupPenggunaActivity : AppCompatActivity() {
     private fun setupViewModel() {
         signupViewModel = ViewModelProvider(
             this,
-            ViewModelFactory()
+            ViewModelFactory(UserPreference.getInstance(dataStore))
         )[SignupViewModel::class.java]
     }
 
@@ -119,7 +116,7 @@ class SignupPenggunaActivity : AppCompatActivity() {
                                     binding.progressBar.visibility = View.GONE
                                     AlertDialog.Builder(this).apply {
                                         setTitle(getString(R.string.berhasil))
-                                        setMessage(result.data)
+                                        setMessage(result.data.message)
                                         setPositiveButton(getString(R.string.lanjut)) { _, _ ->
                                             val intent = Intent(this@SignupPenggunaActivity, LoginActivity::class.java)
                                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

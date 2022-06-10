@@ -19,7 +19,7 @@ import com.dicoding.getpeople.ui.login.LoginActivity
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.signup.SignupPenggunaActivity
 
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+public val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
 class WelcomeActivity : AppCompatActivity() {
 
