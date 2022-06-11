@@ -1,4 +1,4 @@
-package com.dicoding.getpeople.ui.cameraActivity
+package com.dicoding.getpeople.ui.camera
 
 import android.content.Intent
 import android.os.Build

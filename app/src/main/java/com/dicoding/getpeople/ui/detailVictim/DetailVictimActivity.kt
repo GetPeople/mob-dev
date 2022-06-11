@@ -63,4 +63,8 @@ class DetailVictimActivity : AppCompatActivity() {
             }
         }
     }
+
+    companion object {
+        const val KORBAN = "korban"
+    }
 }

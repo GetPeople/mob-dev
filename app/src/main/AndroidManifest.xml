@@ -22,7 +22,7 @@
             android:name=".ui.welcome.ChooseRoleActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.cameraActivity.CameraActivity"
+            android:name=".ui.camera.CameraActivity"
             android:exported="false" />
         <activity
             android:name=".ui.searchResult.SearchResultActivity"

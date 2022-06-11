@@ -11,10 +11,6 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
 
-//    fun getUser(): LiveData<UserModel> {
-//        return pref.getUser().asLiveData()
-//    }
-
     fun login(
         email: String,
         password: String

@@ -8,6 +8,7 @@ import com.dicoding.getpeople.di.Injection
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.addVictim.AddVictimViewModel
 import com.dicoding.getpeople.ui.findVictim.FindVictimViewModel
+import com.dicoding.getpeople.ui.listVictim.ListVictimViewModel
 import com.dicoding.getpeople.ui.login.LoginViewModel
 import com.dicoding.getpeople.ui.maps.MapsViewModel
 import com.dicoding.getpeople.ui.searchResult.SearchResultViewModel
@@ -33,13 +34,16 @@ class ViewModelFactory(private val pref: UserPreference) :
                 MapsViewModel(pref) as T
             }
             modelClass.isAssignableFrom(AddVictimViewModel::class.java) -> {
-                AddVictimViewModel(pref) as T
+                AddVictimViewModel(pref, Injection.provideVictimRepository(pref)) as T
             }
             modelClass.isAssignableFrom(SearchResultViewModel::class.java) -> {
                 SearchResultViewModel(pref) as T
             }
             modelClass.isAssignableFrom(FindVictimViewModel::class.java) -> {
-                FindVictimViewModel(pref) as T
+                FindVictimViewModel(pref, Injection.provideVictimRepository(pref)) as T
+            }
+            modelClass.isAssignableFrom(ListVictimViewModel::class.java) -> {
+                ListVictimViewModel(pref, Injection.provideVictimRepository(pref)) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }

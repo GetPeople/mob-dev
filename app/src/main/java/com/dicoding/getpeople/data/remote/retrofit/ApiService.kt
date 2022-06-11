@@ -32,9 +32,7 @@ interface ApiService {
 
     @GET("korban/daftar")
     fun getDaftarKorban(
-        @Header("Authorization") authHeader : String,
-        @Query("page") page: Int,
-        @Query("size") size: Int,
+        @Header("Authorization") authHeader : String
     ) : Call<ListKorbanResponse>
 
     @Multipart

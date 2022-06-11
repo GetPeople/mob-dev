@@ -8,17 +8,17 @@ import kotlinx.android.parcel.Parcelize
 data class ListKorbanResponse(
 
 	@field:SerializedName("listKorban")
-	val listKorban: List<ListKorbanItem?>? = null,
+	val listKorban: List<KorbanItem?>? = null,
 
 	@field:SerializedName("error")
 	val error: Boolean? = null,
 
 	@field:SerializedName("message")
-	val message: String? = null
+	val message: String
 ) : Parcelable
 
 @Parcelize
-data class ListKorbanItem(
+data class KorbanItem(
 
 	@field:SerializedName("momName")
 	val momName: String? = null,

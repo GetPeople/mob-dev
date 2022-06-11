@@ -18,9 +18,8 @@ import com.dicoding.getpeople.databinding.ActivityAddVictimBinding
 import com.dicoding.getpeople.R
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
-import com.dicoding.getpeople.ui.cameraActivity.CameraActivity
+import com.dicoding.getpeople.ui.camera.CameraActivity
 import com.dicoding.getpeople.ui.maps.MapsActivity
-import com.dicoding.getpeople.ui.maps.MapsViewModel
 import com.dicoding.getpeople.ui.rotateBitmap
 import com.dicoding.getpeople.ui.uriToFile
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity

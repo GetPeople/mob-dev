@@ -100,6 +100,26 @@ class UserRepository private constructor(
         return resultLogin
     }
 
+//    fun logout(){
+//        val client = apiService.logout()
+//        client.enqueue(object : Callback<DefaultResponse> {
+//            override fun onResponse(
+//                call: Call<DefaultResponse>,
+//                response: Response<DefaultResponse>
+//            ) {
+//                if (response.isSuccessful) {
+//                    runBlocking {
+//                        preference.logout()
+//                    }
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
+//
+//            }
+//        })
+//    }
+
     companion object {
         @Volatile
         private var instance: UserRepository? = null
