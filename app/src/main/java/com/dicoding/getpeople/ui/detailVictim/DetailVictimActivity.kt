@@ -6,7 +6,9 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
 import com.dicoding.getpeople.R
+import com.dicoding.getpeople.data.remote.response.KorbanItem
 import com.dicoding.getpeople.databinding.ActivityDetailVictimBinding
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
@@ -26,6 +28,7 @@ class DetailVictimActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupViewModel()
+        setupView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -61,6 +64,23 @@ class DetailVictimActivity : AppCompatActivity() {
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
             }
+        }
+    }
+
+    private fun setupView() {
+        val victim = intent.getParcelableExtra<KorbanItem>(KORBAN)
+        Glide.with(this)
+            .load(victim?.photoUrl)
+            .into(binding.imageviewKorban)
+        binding.apply {
+            valueLokasi.text = victim?.posko
+            valueKontak.text = victim?.kontak
+            valueNama.text = victim?.name
+            valueGender.text = victim?.gender
+            valueTempatLahir.text = victim?.birthPlace
+            valueTanggalLahir.text = victim?.birthDate
+            valueIbu.text = victim?.momName
+            valueNik.text = victim?.nik
         }
     }
 

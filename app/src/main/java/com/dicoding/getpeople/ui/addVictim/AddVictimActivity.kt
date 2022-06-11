@@ -9,22 +9,31 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.databinding.ActivityAddVictimBinding
 import com.dicoding.getpeople.R
+import com.dicoding.getpeople.data.Result
+import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.camera.CameraActivity
+import com.dicoding.getpeople.ui.listVictim.ListVictimActivity
 import com.dicoding.getpeople.ui.maps.MapsActivity
+import com.dicoding.getpeople.ui.reduceFileImage
 import com.dicoding.getpeople.ui.rotateBitmap
 import com.dicoding.getpeople.ui.uriToFile
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
 import com.google.android.material.datepicker.MaterialDatePicker
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -33,6 +42,7 @@ class AddVictimActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAddVictimBinding
     private lateinit var addVictimViewModel: AddVictimViewModel
+    private lateinit var user : UserModel
     private var getFile:File? = null
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
@@ -111,6 +121,8 @@ class AddVictimActivity : AppCompatActivity() {
                 val intent = Intent(this, WelcomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)
+            } else {
+                this.user = user
             }
         }
     }
@@ -132,8 +144,33 @@ class AddVictimActivity : AppCompatActivity() {
             }
         }
 
+        binding.editTextLokasi.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutLokasi.error = null
+            } else {
+                if (binding.editTextLokasi.text.toString() == "") {
+                    binding.textInputLayoutLokasi.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutLokasi.error = null
+                }
+            }
+        }
+
+        binding.editTextKontak.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                binding.textInputLayoutKontak.error = null
+            } else {
+                if (binding.editTextKontak.text.toString() == "") {
+                    binding.textInputLayoutKontak.error = getString(R.string.jangan_kosong)
+                } else {
+                    binding.textInputLayoutKontak.error = null
+                }
+            }
+        }
+
         binding.buttonAmbil.setOnClickListener { startCamera() }
         binding.buttonUnggah.setOnClickListener { startGallery() }
+        binding.buttonKirim.setOnClickListener { tambahKorban() }
     }
 
     private fun startCamera() {
@@ -147,6 +184,88 @@ class AddVictimActivity : AppCompatActivity() {
         intent.type = "image/*"
         val chooser = Intent.createChooser(intent, getString(R.string.pilih_gambar))
         launcherIntentGallery.launch(chooser)
+    }
+
+    private fun tambahKorban() {
+        if (getFile != null) {
+            val posko = binding.editTextLokasi.text.toString()
+            val kontak = binding.editTextKontak.text.toString()
+            val name = binding.editTextNama.text.toString()
+            val gender = binding.editTextGender.text.toString()
+            val birthPlace = binding.editTextTempatLahir.text.toString()
+            val birthDate = binding.editTextTanggalLahir.text.toString()
+            val momName = binding.editTextIbu.text.toString()
+            val nik = binding.editTextNik.text.toString()
+
+            val file = reduceFileImage(getFile as File)
+            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
+            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
+                "photo",
+                file.name,
+                requestImageFile
+            )
+
+            when {
+                posko.isEmpty() -> {}
+                kontak.isEmpty() -> {}
+                else -> {
+                    addVictimViewModel.tambahKorban(
+                        user.token,
+                        imageMultipart,
+                        posko,
+                        kontak,
+                        name,
+                        gender,
+                        birthPlace,
+                        birthDate,
+                        momName,
+                        nik
+                    ).observe(this) { response ->
+                        if (response != null) {
+                            when(response) {
+                                is Result.Loading -> {
+                                    binding.progressBar.visibility = View.VISIBLE
+                                }
+                                is Result.Success -> {
+                                    binding.progressBar.visibility = View.GONE
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle(getString(R.string.berhasil))
+                                        setMessage(response.data.message)
+                                        setPositiveButton(getString(R.string.lanjut)) { _, _ ->
+                                            finish()
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                                is Result.Error -> {
+                                    binding.progressBar.visibility = View.GONE
+                                    AlertDialog.Builder(this).apply {
+                                        setTitle(getString(R.string.gagal))
+                                        setMessage(response.error)
+                                        setNegativeButton(getString(R.string.tutup)) { _, _ ->
+                                        }
+                                        create()
+                                        show()
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                }
+            }
+        } else {
+            AlertDialog.Builder(this).apply {
+                setTitle(getString(R.string.gagal))
+                setMessage(getString(R.string.belum_ada_gambar))
+                setNegativeButton(getString(R.string.tutup)) { _, _ ->
+                }
+                create()
+                show()
+            }
+        }
+
     }
 
     override fun onRequestPermissionsResult(

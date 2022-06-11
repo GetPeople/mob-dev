@@ -14,6 +14,7 @@ import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.addVictim.AddVictimActivity
 import com.dicoding.getpeople.ui.findVictim.FindVictimActivity
+import com.dicoding.getpeople.ui.listVictim.ListVictimActivity
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
 
@@ -98,7 +99,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (user.role == "pengguna") {
                 startActivity(Intent(this, FindVictimActivity::class.java))
             } else {
-                startActivity(Intent(this, AddVictimActivity::class.java))
+                startActivity(Intent(this, ListVictimActivity::class.java))
             }
             true
         }

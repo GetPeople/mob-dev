@@ -19,6 +19,7 @@ import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.adapter.ListVictimAdapter
+import com.dicoding.getpeople.ui.addVictim.AddVictimActivity
 import com.dicoding.getpeople.ui.detailVictim.DetailVictimActivity
 import com.dicoding.getpeople.ui.findVictim.FindVictimViewModel
 import com.dicoding.getpeople.ui.maps.MapsActivity
@@ -38,6 +39,7 @@ class ListVictimActivity : AppCompatActivity() {
 
         setupViewModel()
         setupRecyclerView()
+        setupAction()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -120,5 +122,12 @@ class ListVictimActivity : AppCompatActivity() {
             }
 
         })
+    }
+
+    private fun setupAction() {
+        binding.buttonTambahKorban.setOnClickListener {
+            val intent = Intent(this, AddVictimActivity::class.java)
+            startActivity(intent)
+        }
     }
 }

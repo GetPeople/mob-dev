@@ -1,15 +1,21 @@
 package com.dicoding.getpeople.ui.searchResult
 
 import android.content.Intent
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.getpeople.R
+import com.dicoding.getpeople.data.remote.response.KorbanItem
 import com.dicoding.getpeople.databinding.ActivitySearchResultBinding
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
+import com.dicoding.getpeople.ui.adapter.ListVictimAdapter
+import com.dicoding.getpeople.ui.detailVictim.DetailVictimActivity
 import com.dicoding.getpeople.ui.listVictim.ListVictimViewModel
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
@@ -26,6 +32,7 @@ class SearchResultActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setupViewModel()
+        setupRecyclerView()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -62,5 +69,33 @@ class SearchResultActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+    }
+
+    private fun setupRecyclerView() {
+        val arrayListKorban = intent.getParcelableArrayListExtra<KorbanItem>(LIST_KORBAN)
+        if (arrayListKorban != null) {
+            setupListKorban(arrayListKorban.toList())
+        }
+    }
+
+    private fun setupListKorban(listKorban : List<KorbanItem>) {
+        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            binding.rvResult.layoutManager = GridLayoutManager(this, 2)
+        } else {
+            binding.rvResult.layoutManager = LinearLayoutManager(this)
+        }
+        val adapter = ListVictimAdapter(listKorban)
+        binding.rvResult.adapter = adapter
+        adapter.setOnItemClickCallback(object : ListVictimAdapter.OnItemClickCallback {
+            override fun onItemClicked(korban: KorbanItem) {
+                val intent = Intent(this@SearchResultActivity, DetailVictimActivity::class.java)
+                intent.putExtra(DetailVictimActivity.KORBAN, korban)
+                startActivity(intent)
+            }
+        })
+    }
+
+    companion object{
+        const val LIST_KORBAN = "list korban"
     }
 }

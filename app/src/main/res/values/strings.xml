@@ -41,4 +41,9 @@
     <string name="jangan_kosong">Tidak boleh kosong!</string>
     <string name="min_enam">Minimal panjang 6 karakter</string>
     <string name="email_tidak_valid">Email tidak valid</string>
+    <string name="button_cari">Cari</string>
+    <string name="belum_ada_gambar">Masukkan gambar terlebih dahulu!</string>
+    <string name="hint_kontak">Kontak</string>
+    <string name="hint_gender">Jenis Kelamin</string>
+    <string name="hint_tempat_lahir">Tempat Lahir</string>
 </resources>

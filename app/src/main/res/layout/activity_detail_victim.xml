@@ -57,6 +57,40 @@
             tools:text="Posko Cipete Utara" />
 
         <TextView
+            android:id="@+id/title_kontak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/hint_kontak"
+            android:textColor="#5599FE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/value_lokasi" />
+
+        <View
+            android:id="@+id/line_kontak"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="32dp"
+            android:background="#5599FE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_kontak" />
+
+        <TextView
+            android:id="@+id/value_kontak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_kontak"
+            tools:text="081218381737" />
+
+        <TextView
             android:id="@+id/title_nama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +99,7 @@
             android:text="@string/hint_nama"
             android:textColor="#5599FE"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/value_lokasi" />
+            app:layout_constraintTop_toBottomOf="@+id/value_kontak" />
 
         <View
             android:id="@+id/line_nama"
@@ -91,6 +125,74 @@
             tools:text="Richard Habibi" />
 
         <TextView
+            android:id="@+id/title_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/hint_gender"
+            android:textColor="#5599FE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/value_nama" />
+
+        <View
+            android:id="@+id/line_gender"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="32dp"
+            android:background="#5599FE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_gender" />
+
+        <TextView
+            android:id="@+id/value_gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_gender"
+            tools:text="Laki-Laki" />
+
+        <TextView
+            android:id="@+id/title_tempat_lahir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/hint_tempat_lahir"
+            android:textColor="#5599FE"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/value_gender" />
+
+        <View
+            android:id="@+id/line_tempat_lahir"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="32dp"
+            android:background="#5599FE"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title_tempat_lahir" />
+
+        <TextView
+            android:id="@+id/value_tempat_lahir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="4dp"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/line_tempat_lahir"
+            tools:text="Jakarta" />
+
+        <TextView
             android:id="@+id/title_tanggal_lahir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -99,7 +201,7 @@
             android:text="@string/hint_tanggal_lahir"
             android:textColor="#5599FE"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/value_nama" />
+            app:layout_constraintTop_toBottomOf="@+id/value_tempat_lahir" />
 
         <View
             android:id="@+id/line_tanggal_lahir"
@@ -187,7 +289,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="24dp"
             android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/line_nik"
             tools:text="3615271708031778" />
