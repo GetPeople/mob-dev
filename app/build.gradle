@@ -17,6 +17,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField 'String', 'BASE_URL', '"https://get-people-hicdj3qg2q-as.a.run.app/"'
+        buildConfigField 'String', 'MAPS_API_KEY', '"AIzaSyDQkc5SfHq_zJU7QvFSeB6orswlI9QjR48"'
     }
 
     buildTypes {

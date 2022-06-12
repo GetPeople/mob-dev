@@ -48,4 +48,7 @@
     <string name="hint_tempat_lahir">Tempat Lahir</string>
     <string name="mencari">Mencari...</string>
     <string name="hint_loading">Loading</string>
+    <string name="welcome_subtitle">Aplikasi yang dapat membantumu mencari orang dan keluarga terdekat di lokasi bencana. Daftar atau masuk untuk memulai!</string>
+    <string name="hint_gambar_daftar">Gambar Daftar</string>
+    <string name="getpeople">GetPeople</string>
 </resources>

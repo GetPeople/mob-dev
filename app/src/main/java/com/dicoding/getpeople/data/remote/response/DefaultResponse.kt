@@ -7,8 +7,8 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class DefaultResponse(
 
-	@field:SerializedName("error")
-	val error: Boolean? = null,
+	@field:SerializedName("status")
+	val status: String,
 
 	@field:SerializedName("message")
 	val message: String

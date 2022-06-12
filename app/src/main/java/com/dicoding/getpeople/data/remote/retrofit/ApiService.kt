@@ -1,5 +1,6 @@
 package com.dicoding.getpeople.data.remote.retrofit
 
+import com.dicoding.getpeople.data.remote.request.UserRequest
 import com.dicoding.getpeople.data.remote.response.LoginResponse
 import com.dicoding.getpeople.data.remote.response.DefaultResponse
 import com.dicoding.getpeople.data.remote.response.ListKorbanResponse
@@ -9,28 +10,19 @@ import retrofit2.http.*
 
 interface ApiService {
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("register")
     fun register(
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String,
-        @Field("role") role: String,
-        @Field("idPetugas") idPetugas: String?
+        @Body userRequest: UserRequest
     ) : Call<DefaultResponse>
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("login")
     fun login(
-        @Field("email") email: String,
-        @Field("password") password: String
+        @Body userRequest: UserRequest
     ) : Call<LoginResponse>
 
-    @DELETE("logout")
-    fun logout(
-    ) : Call<DefaultResponse>
-
-    @GET("korban/daftar")
+    @GET("victim/list")
     fun getDaftarKorban(
         @Header("Authorization") authHeader : String
     ) : Call<ListKorbanResponse>
@@ -44,7 +36,7 @@ interface ApiService {
 
     @Multipart
     @FormUrlEncoded
-    @POST("korban/tambah")
+    @POST("victim/add")
     fun tambahKorban(
         @Header("Authorization") authHeader : String,
         @Part file: MultipartBody.Part,
