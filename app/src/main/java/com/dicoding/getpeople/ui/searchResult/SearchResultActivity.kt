@@ -86,6 +86,7 @@ class SearchResultActivity : AppCompatActivity() {
         }
         val adapter = ListVictimAdapter(listKorban)
         binding.rvResult.adapter = adapter
+
         adapter.setOnItemClickCallback(object : ListVictimAdapter.OnItemClickCallback {
             override fun onItemClicked(korban: KorbanItem) {
                 val intent = Intent(this@SearchResultActivity, DetailVictimActivity::class.java)
