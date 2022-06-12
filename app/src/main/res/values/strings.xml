@@ -46,4 +46,6 @@
     <string name="hint_kontak">Kontak</string>
     <string name="hint_gender">Jenis Kelamin</string>
     <string name="hint_tempat_lahir">Tempat Lahir</string>
+    <string name="mencari">Mencari...</string>
+    <string name="hint_loading">Loading</string>
 </resources>

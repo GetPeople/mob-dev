@@ -3,12 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".ui.loading.LoadingActivity">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/image_loading"
         android:layout_width="406dp"
         android:layout_height="401dp"
+        android:contentDescription="@string/hint_loading"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
