@@ -102,13 +102,16 @@
             android:hint="@string/hint_nama"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_kontak">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_kontak"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_nama"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_textarea"
                 android:ems="10"
                 android:inputType="text"
                 android:textColorHint="#757575" />
@@ -125,13 +128,16 @@
             android:hint="@string/hint_lokasi"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_unggah">
+            app:layout_constraintTop_toBottomOf="@+id/button_unggah"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_lokasi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_textarea"
                 android:ems="10"
                 android:inputType="text"
                 android:textColorHint="#757575" />
@@ -148,13 +154,16 @@
             android:hint="@string/hint_kontak"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_lokasi">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_lokasi"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_kontak"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_textarea"
                 android:ems="10"
                 android:inputType="text"
                 android:textColorHint="#757575" />
@@ -174,7 +183,7 @@
             android:hint="@string/hint_tanggal_lahir"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_gender">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_tempat_lahir">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_tanggal_lahir"
@@ -200,13 +209,16 @@
             android:hint="@string/hint_nik"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_ibu">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_ibu"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_nik"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_textarea"
                 android:ems="10"
                 android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -222,13 +234,16 @@
             android:hint="@string/hint_ibu"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_tanggal_lahir">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_tanggal_lahir"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_ibu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_textarea"
                 android:ems="10"
                 android:inputType="text"
                 android:textColorHint="#757575" />
@@ -245,13 +260,16 @@
             android:hint="@string/hint_gender"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_nama">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_nama"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_gender"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/custom_textarea"
                 android:ems="10"
                 android:inputType="text"
                 android:textColorHint="#757575" />
@@ -268,14 +286,17 @@
             android:hint="@string/hint_tempat_lahir"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_gender">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_gender"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_tempat_lahir"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:background="@drawable/custom_textarea"
                 android:inputType="text"
                 android:textColorHint="#757575" />
         </com.google.android.material.textfield.TextInputLayout>
