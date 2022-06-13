@@ -10,11 +10,11 @@ data class LoginResponse(
 	@field:SerializedName("loginResult")
 	val loginResult: LoginResult? = null,
 
-	@field:SerializedName("error")
-	val error: Boolean? = null,
+	@field:SerializedName("status")
+	val status: String,
 
 	@field:SerializedName("message")
-	val message: String? = null
+	val message: String
 ) : Parcelable
 
 @Parcelize

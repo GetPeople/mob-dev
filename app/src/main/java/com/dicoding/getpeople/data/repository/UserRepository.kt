@@ -1,17 +1,18 @@
 package com.dicoding.getpeople.data.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
 import com.dicoding.getpeople.data.remote.response.DefaultResponse
 import com.dicoding.getpeople.data.remote.retrofit.ApiService
 import com.dicoding.getpeople.data.Result
+import com.dicoding.getpeople.data.remote.request.UserRequest
 import com.dicoding.getpeople.data.remote.response.LoginResponse
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,30 +31,35 @@ class UserRepository private constructor(
     private val _responseLogin = MutableLiveData<LoginResponse>()
     private val responseLogin : LiveData<LoginResponse> = _responseLogin
 
-    fun register(nama : String,
+    fun register(name : String,
                  email : String,
                  password : String,
                  role : String,
                  idPetugas : String?)
     : LiveData<Result<DefaultResponse>> {
         resultRegister.value = Result.Loading
-        val client = if (idPetugas == null) {
-            apiService.register(nama, email, password, role, null)
-        } else {
-            apiService.register(nama, email, password, role, idPetugas)
-        }
+        Log.e("UserRepository", "1: " + (resultRegister.value is Result.Loading))
+        val registerRequest = UserRequest(name, email, password, role, idPetugas)
+        val client = apiService.register(registerRequest)
         client.enqueue(object : Callback<DefaultResponse> {
             override fun onResponse(
                 call: Call<DefaultResponse>,
                 response: Response<DefaultResponse>
             ) {
+                Log.e("UserRepository","Masuk sini 2")
                 if (response.isSuccessful) {
+                    Log.e("UserRepository","Masuk sini 3")
                     _responseRegister.value = response.body()
                     resultRegister.addSource(responseRegister) { resp ->
                         resultRegister.value = Result.Success(resp)
                     }
                 } else {
-                    resultRegister.value = response.body()?.let { Result.Error(it.message) }
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        resultRegister.value = Result.Error(jObjError.getString("message"))
+                    } catch (e: Exception) {
+
+                    }
                 }
             }
 
@@ -62,6 +68,7 @@ class UserRepository private constructor(
             }
 
         })
+        Log.e("UserRepository","3: " + (resultRegister.value is Result.Loading))
         return resultRegister
     }
 
@@ -70,7 +77,7 @@ class UserRepository private constructor(
         password: String
     ) : LiveData<Result<LoginResponse>> {
         resultLogin.value = Result.Loading
-        val client = apiService.login(email, password)
+        val client = apiService.login(UserRequest(null, email, password, null, null))
         client.enqueue(object : Callback<LoginResponse> {
             override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
                 if (response.isSuccessful) {
@@ -88,7 +95,12 @@ class UserRepository private constructor(
                         resultLogin.value = Result.Success(resp)
                     }
                 } else {
-                    resultLogin.value = response.body()?.message?.let { Result.Error(it) }
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        resultRegister.value = Result.Error(jObjError.getString("message"))
+                    } catch (e: Exception) {
+
+                    }
                 }
             }
 
@@ -99,26 +111,6 @@ class UserRepository private constructor(
         })
         return resultLogin
     }
-
-//    fun logout(){
-//        val client = apiService.logout()
-//        client.enqueue(object : Callback<DefaultResponse> {
-//            override fun onResponse(
-//                call: Call<DefaultResponse>,
-//                response: Response<DefaultResponse>
-//            ) {
-//                if (response.isSuccessful) {
-//                    runBlocking {
-//                        preference.logout()
-//                    }
-//                }
-//            }
-//
-//            override fun onFailure(call: Call<DefaultResponse>, t: Throwable) {
-//
-//            }
-//        })
-//    }
 
     companion object {
         @Volatile

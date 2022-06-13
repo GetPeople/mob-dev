@@ -17,7 +17,7 @@ object Injection {
         return UserRepository.getInstance(apiService, preference)
     }
 
-    fun provideVictimRepository(preference: UserPreference) : VictimRepository {
-        return VictimRepository.getInstance(apiService, preference)
+    fun provideVictimRepository() : VictimRepository {
+        return VictimRepository.getInstance(apiService)
     }
 }

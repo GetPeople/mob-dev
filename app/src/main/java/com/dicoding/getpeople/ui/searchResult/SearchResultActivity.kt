@@ -20,6 +20,7 @@ import com.dicoding.getpeople.ui.listVictim.ListVictimViewModel
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
+import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class SearchResultActivity : AppCompatActivity() {
 
@@ -86,6 +87,12 @@ class SearchResultActivity : AppCompatActivity() {
         }
         val adapter = ListVictimAdapter(listKorban)
         binding.rvResult.adapter = adapter
+
+        val divider = MaterialDividerItemDecoration(this, applicationContext.resources.configuration.orientation)
+//        divider.dividerInsetStart = 10
+//        divider.dividerInsetEnd = 10
+        binding.rvResult.addItemDecoration(divider)
+
         adapter.setOnItemClickCallback(object : ListVictimAdapter.OnItemClickCallback {
             override fun onItemClicked(korban: KorbanItem) {
                 val intent = Intent(this@SearchResultActivity, DetailVictimActivity::class.java)

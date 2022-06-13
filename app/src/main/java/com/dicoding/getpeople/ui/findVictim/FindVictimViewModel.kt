@@ -10,7 +10,8 @@ import com.dicoding.getpeople.model.UserPreference
 import kotlinx.coroutines.launch
 import okhttp3.MultipartBody
 
-class FindVictimViewModel(private val pref: UserPreference, private val victimRepository: VictimRepository) : ViewModel() {
+class FindVictimViewModel(private val pref: UserPreference,
+                          private val victimRepository: VictimRepository) : ViewModel() {
 
     fun getUser(): LiveData<UserModel> {
         return pref.getUser().asLiveData()

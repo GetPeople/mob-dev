@@ -1,7 +1,10 @@
 package com.dicoding.getpeople.ui.signup
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.dicoding.getpeople.data.Result
+import com.dicoding.getpeople.data.remote.response.DefaultResponse
 import com.dicoding.getpeople.data.repository.UserRepository
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
@@ -13,6 +16,6 @@ class SignupViewModel(private val userRepository: UserRepository) : ViewModel() 
                  email : String,
                  password : String,
                  role : String,
-                 idPetugas : String?)
-    = userRepository.register(nama, email, password, role, idPetugas)
+                 idPetugas : String?) = userRepository.register(nama, email, password, role, idPetugas)
+
 }

@@ -25,6 +25,7 @@ import com.dicoding.getpeople.ui.findVictim.FindVictimViewModel
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
+import com.google.android.material.divider.MaterialDividerItemDecoration
 
 class ListVictimActivity : AppCompatActivity() {
 
@@ -112,6 +113,12 @@ class ListVictimActivity : AppCompatActivity() {
         } else {
             binding.rvResult.layoutManager = LinearLayoutManager(this)
         }
+
+        val divider = MaterialDividerItemDecoration(this, applicationContext.resources.configuration.orientation)
+//        divider.dividerInsetStart = 10
+//        divider.dividerInsetEnd = 10
+        binding.rvResult.addItemDecoration(divider)
+
         val adapter = ListVictimAdapter(listKorban)
         binding.rvResult.adapter = adapter
         adapter.setOnItemClickCallback(object : ListVictimAdapter.OnItemClickCallback {

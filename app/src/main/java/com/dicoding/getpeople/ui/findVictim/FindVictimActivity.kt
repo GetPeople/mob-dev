@@ -26,6 +26,7 @@ import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.addVictim.AddVictimActivity
 import com.dicoding.getpeople.ui.camera.CameraActivity
 import com.dicoding.getpeople.ui.detailVictim.DetailVictimViewModel
+import com.dicoding.getpeople.ui.loading.LoadingActivity
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.reduceFileImage
 import com.dicoding.getpeople.ui.rotateBitmap
@@ -151,43 +152,10 @@ class FindVictimActivity : AppCompatActivity() {
 
     private fun cariKorban() {
         if (getFile != null) {
-            val file = reduceFileImage(getFile as File)
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
-                file.name,
-                requestImageFile
-            )
-            findVictimViewModel.cariKorban(user.token, imageMultipart).observe(this) { response ->
-                if (response != null) {
-                    when(response) {
-                        is Result.Loading -> {
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
-                        is Result.Success -> {
-                            binding.progressBar.visibility = View.GONE
-                            val intent = Intent(this@FindVictimActivity, SearchResultActivity::class.java)
-                            val arrayListKorban = arrayListOf<KorbanItem>()
-                            val listKorban = response.data.listKorban
-                            arrayListKorban.addAll(listKorban as List<KorbanItem>)
-                            intent.putParcelableArrayListExtra(SearchResultActivity.LIST_KORBAN, arrayListKorban)
-                            startActivity(intent)
-                            finish()
-                        }
-                        is Result.Error -> {
-                            binding.progressBar.visibility = View.GONE
-                            AlertDialog.Builder(this).apply {
-                                setTitle(getString(R.string.gagal))
-                                setMessage(response.error)
-                                setNegativeButton(getString(R.string.tutup)) { _, _ ->
-                                }
-                                create()
-                                show()
-                            }
-                        }
-                    }
-                }
-            }
+            val intent = Intent(this, LoadingActivity::class.java)
+            intent.putExtra(LoadingActivity.PICTURE, getFile)
+            startActivity(intent)
+            finish()
         } else {
             AlertDialog.Builder(this).apply {
                 setTitle(getString(R.string.gagal))

@@ -15,8 +15,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class VictimRepository private constructor(
-    private val apiService: ApiService,
-    private val preference: UserPreference
+    private val apiService: ApiService
 ){
 
     private val resultListKorban = MediatorLiveData<Result<ListKorbanResponse>>()
@@ -131,11 +130,10 @@ class VictimRepository private constructor(
         @Volatile
         private var instance: VictimRepository? = null
         fun getInstance(
-            apiService: ApiService,
-            preference: UserPreference
+            apiService: ApiService
         ) : VictimRepository =
             instance ?: synchronized(this) {
-                instance ?: VictimRepository(apiService, preference)
+                instance ?: VictimRepository(apiService)
             }.also { instance = it }
     }
 }
