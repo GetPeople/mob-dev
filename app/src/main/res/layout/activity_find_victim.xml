@@ -36,12 +36,11 @@
         android:layout_width="0dp"
         android:layout_height="250dp"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.26999998"
+        app:layout_constraintTop_toBottomOf="@+id/text_cari_korban_subtitle"
         app:srcCompat="@drawable/ic_baseline_portrait_24" />
 
     <Button

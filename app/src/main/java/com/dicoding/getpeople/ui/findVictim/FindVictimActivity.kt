@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -77,6 +78,8 @@ class FindVictimActivity : AppCompatActivity() {
         binding = ActivityFindVictimBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         supportActionBar?.title = getString(R.string.menu_cari_korban)
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -118,13 +121,13 @@ class FindVictimActivity : AppCompatActivity() {
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[FindVictimViewModel::class.java]
 
-        findVictimViewModel.getUser().observe(this) { user ->
-            if (!user.isLogin) {
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
-        }
+//        findVictimViewModel.getUser().observe(this) { user ->
+//            if (!user.isLogin) {
+//                val intent = Intent(this, WelcomeActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+//            }
+//        }
     }
 
     private fun setupAction() {

@@ -7,5 +7,5 @@ data class UserRequest(
     @SerializedName("email") val email: String?,
     @SerializedName("password") val password: String?,
     @SerializedName("role") val role: String?,
-    @SerializedName("idPetugas") val idPetugas: String?
+    @SerializedName("id_petugas") val idPetugas: String?
 )

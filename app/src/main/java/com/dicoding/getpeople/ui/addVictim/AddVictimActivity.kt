@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
@@ -76,6 +77,8 @@ class AddVictimActivity : AppCompatActivity() {
         binding = ActivityAddVictimBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         supportActionBar?.title = getString(R.string.menu_tambah_korban)
         if (!allPermissionsGranted()) {
             ActivityCompat.requestPermissions(
@@ -116,15 +119,15 @@ class AddVictimActivity : AppCompatActivity() {
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[AddVictimViewModel::class.java]
 
-        addVictimViewModel.getUser().observe(this) { user ->
-            if (!user.isLogin) {
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else {
-                this.user = user
-            }
-        }
+//        addVictimViewModel.getUser().observe(this) { user ->
+//            if (!user.isLogin) {
+//                val intent = Intent(this, WelcomeActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+//            } else {
+//                this.user = user
+//            }
+//        }
     }
 
     private fun setupAction() {

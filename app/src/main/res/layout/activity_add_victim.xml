@@ -44,11 +44,11 @@
             android:layout_marginStart="32dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="32dp"
+            android:contentDescription="@string/desc_korban"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_tambah_korban_subtitle"
-            app:srcCompat="@drawable/ic_baseline_portrait_24"
-            android:contentDescription="@string/desc_korban"/>
+            app:srcCompat="@drawable/ic_baseline_portrait_24" />
 
         <Button
             android:id="@+id/button_ambil"
@@ -183,7 +183,11 @@
             android:hint="@string/hint_tanggal_lahir"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_tempat_lahir">
+            app:layout_constraintTop_toBottomOf="@+id/text_input_layout_tempat_lahir"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_tanggal_lahir"

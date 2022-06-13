@@ -3,10 +3,14 @@ package com.dicoding.getpeople.ui.loading
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowInsets
+import android.view.WindowManager
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.R
 import com.dicoding.getpeople.data.Result
@@ -14,7 +18,6 @@ import com.dicoding.getpeople.data.remote.response.KorbanItem
 import com.dicoding.getpeople.databinding.ActivityLoadingBinding
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
-import com.dicoding.getpeople.ui.findVictim.FindVictimViewModel
 import com.dicoding.getpeople.ui.reduceFileImage
 import com.dicoding.getpeople.ui.searchResult.SearchResultActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
@@ -33,10 +36,25 @@ class LoadingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoadingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
+        setupView()
         setupViewModel()
         playAnimation()
-        cariKorban()
+        //cariKorban()
+    }
+
+    private fun setupView() {
+        @Suppress("DEPRECATION")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.hide(WindowInsets.Type.statusBars())
+        } else {
+            window.setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+            )
+        }
+        supportActionBar?.hide()
     }
 
     private fun setupViewModel() {

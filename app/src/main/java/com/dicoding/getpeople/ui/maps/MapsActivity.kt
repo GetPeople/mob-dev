@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.R
 import com.dicoding.getpeople.databinding.ActivityMapsBinding
@@ -37,6 +38,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -69,14 +71,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             ViewModelFactory(UserPreference.getInstance(dataStore))
         )[MapsViewModel::class.java]
 
-        mapsViewModel.getUser().observe(this) { user ->
-            this.user = user
-            if (!user.isLogin) {
-                val intent = Intent(this, WelcomeActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            }
-        }
+//        mapsViewModel.getUser().observe(this) { user ->
+//            this.user = user
+//            if (!user.isLogin) {
+//                val intent = Intent(this, WelcomeActivity::class.java)
+//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+//                startActivity(intent)
+//            }
+//        }
     }
 
     /**
@@ -99,7 +101,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (user.role == "pengguna") {
                 startActivity(Intent(this, FindVictimActivity::class.java))
             } else {
-                startActivity(Intent(this, ListVictimActivity::class.java))
+                startActivity(Intent(this, AddVictimActivity::class.java))
             }
             true
         }
