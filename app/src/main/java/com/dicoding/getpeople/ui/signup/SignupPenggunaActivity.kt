@@ -50,7 +50,7 @@ class SignupPenggunaActivity : AppCompatActivity() {
     private fun setupViewModel() {
         signupViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[SignupViewModel::class.java]
 
     }
@@ -109,16 +109,12 @@ class SignupPenggunaActivity : AppCompatActivity() {
                 }
                 else -> {
                     signupViewModel.register(name, email, password, "pengguna", null).observe(this) { result ->
-                        Log.e(NAME, "Masuk sini $result")
                         if (result != null) {
-                            Log.e(NAME, "Masuk sini 2")
                             when(result) {
                                 is Result.Loading -> {
-                                    Log.e(NAME, "Masuk sini 3")
                                     binding.progressBar.visibility = View.VISIBLE
                                 }
                                 is Result.Success -> {
-                                    Log.e(NAME, "Masuk sini 4")
                                     binding.progressBar.visibility = View.GONE
                                     AlertDialog.Builder(this).apply {
                                         setTitle(getString(R.string.berhasil))
@@ -133,7 +129,6 @@ class SignupPenggunaActivity : AppCompatActivity() {
                                     }
                                 }
                                 is Result.Error -> {
-                                    Log.e(NAME, "Masuk sini 5")
                                     binding.progressBar.visibility = View.GONE
                                     AlertDialog.Builder(this).apply {
                                         setTitle(getString(R.string.gagal))
@@ -150,9 +145,5 @@ class SignupPenggunaActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    companion object {
-        const val NAME = "SignupPenggunaActivity"
     }
 }

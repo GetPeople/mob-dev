@@ -5,14 +5,19 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.dicoding.getpeople.data.remote.response.ListKorbanResponse
 import com.dicoding.getpeople.data.remote.retrofit.ApiService
-import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.data.Result
 import com.dicoding.getpeople.data.remote.response.DefaultResponse
 import retrofit2.Callback
-import kotlinx.coroutines.flow.map
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Response
+import java.io.File
 
 class VictimRepository private constructor(
     private val apiService: ApiService
@@ -43,9 +48,15 @@ class VictimRepository private constructor(
                     resultListKorban.addSource(responseListKorban) { res ->
                         resultListKorban.value = Result.Success(res)
                     }
+                    resultListKorban.removeSource(responseListKorban)
 
                 } else {
-                    resultListKorban.value = response.body()?.let { Result.Error(it.message) }
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        resultListKorban.value = Result.Error(jObjError.getString("message"))
+                    } catch (e: Exception) {
+
+                    }
                 }
             }
 
@@ -59,7 +70,7 @@ class VictimRepository private constructor(
 
     fun tambahKorban(
         token: String,
-        photo : MultipartBody.Part,
+        image : File,
         posko : String,
         kontak : String,
         name : String,
@@ -70,8 +81,22 @@ class VictimRepository private constructor(
         nik : String
     ) : LiveData<Result<DefaultResponse>> {
         resultTambahKorban.value = Result.Loading
+        val requestImageFile = image.asRequestBody("image/jpeg".toMediaTypeOrNull())
+        val body = MultipartBody.Builder()
+            .setType(MultipartBody.FORM)
+            .addFormDataPart("image", image.name, requestImageFile)
+            .addFormDataPart("posko", posko)
+            .addFormDataPart("contact", kontak)
+            .addFormDataPart("name", name)
+            .addFormDataPart("gender", gender)
+            .addFormDataPart("birthPlace", birthPlace)
+            .addFormDataPart("birthDate", birthDate)
+            .addFormDataPart("momName", momName)
+            .addFormDataPart("nik", nik)
+            .build()
         val client = apiService.tambahKorban(
-            "Bearer $token", photo, posko, kontak, name, gender, birthPlace, birthDate, momName, nik
+            "Bearer $token",
+            body
         )
         client.enqueue(object : Callback<DefaultResponse> {
             override fun onResponse(
@@ -83,8 +108,14 @@ class VictimRepository private constructor(
                     resultTambahKorban.addSource(responseTambahKorban){res ->
                         resultTambahKorban.value = Result.Success(res)
                     }
+                    resultTambahKorban.removeSource(responseTambahKorban)
                 } else {
-                    resultTambahKorban.value = response.body()?.let { Result.Error(it.message) }
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        resultTambahKorban.value = Result.Error(jObjError.getString("message"))
+                    } catch (e: Exception) {
+
+                    }
                 }
             }
 
@@ -111,9 +142,15 @@ class VictimRepository private constructor(
                     resultCariKorban.addSource(responseCariKorban) { res ->
                         resultCariKorban.value = Result.Success(res)
                     }
+                    resultCariKorban.removeSource(responseCariKorban)
 
                 } else {
-                    resultCariKorban.value = response.body()?.let { Result.Error(it.message) }
+                    try {
+                        val jObjError = JSONObject(response.errorBody()!!.string())
+                        resultCariKorban.value = Result.Error(jObjError.getString("message"))
+                    } catch (e: Exception) {
+
+                    }
                 }
             }
 
@@ -122,9 +159,10 @@ class VictimRepository private constructor(
             }
 
         })
-
         return resultCariKorban
     }
+
+    private fun toRequestBody(param: String) = param.toRequestBody("text/plain".toMediaType())
 
     companion object {
         @Volatile

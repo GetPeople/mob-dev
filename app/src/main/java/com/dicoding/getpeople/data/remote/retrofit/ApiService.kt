@@ -5,6 +5,7 @@ import com.dicoding.getpeople.data.remote.response.LoginResponse
 import com.dicoding.getpeople.data.remote.response.DefaultResponse
 import com.dicoding.getpeople.data.remote.response.ListKorbanResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -28,25 +29,15 @@ interface ApiService {
     ) : Call<ListKorbanResponse>
 
     @Multipart
-    @POST("korban/cari")
+    @POST("victim/find")
     fun cariKorban(
         @Header("Authorization") authHeader : String,
         @Part file: MultipartBody.Part
     ) : Call<ListKorbanResponse>
 
-    @Multipart
-    @FormUrlEncoded
-    @POST("victim/add")
+    @POST("victim/upload")
     fun tambahKorban(
         @Header("Authorization") authHeader : String,
-        @Part file: MultipartBody.Part,
-        @Field("posko") posko : String,
-        @Field("kontak") kontak : String,
-        @Field("name") name : String,
-        @Field("gender") gender : String,
-        @Field("birthPlace") birthPlace: String,
-        @Field("birthDate") birthDate : String,
-        @Field("momName") momName : String,
-        @Field("nik") nik : String,
+        @Body body: MultipartBody
     ) : Call<DefaultResponse>
 }

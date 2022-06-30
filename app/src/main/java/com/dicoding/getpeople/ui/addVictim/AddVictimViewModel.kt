@@ -8,7 +8,7 @@ import com.dicoding.getpeople.data.repository.VictimRepository
 import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import kotlinx.coroutines.launch
-import okhttp3.MultipartBody
+import java.io.File
 
 class AddVictimViewModel(private val pref: UserPreference,
                          private val victimRepository: VictimRepository) : ViewModel() {
@@ -25,7 +25,7 @@ class AddVictimViewModel(private val pref: UserPreference,
 
     fun tambahKorban(
         token: String,
-        photo : MultipartBody.Part,
+        photo : File,
         posko : String,
         kontak : String,
         name : String,

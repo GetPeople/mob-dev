@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.getpeople.R
@@ -60,7 +61,7 @@ class SearchResultActivity : AppCompatActivity() {
     private fun setupViewModel(){
         searchResultViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[SearchResultViewModel::class.java]
 
         searchResultViewModel.getUser().observe(this) { user ->
@@ -80,18 +81,17 @@ class SearchResultActivity : AppCompatActivity() {
     }
 
     private fun setupListKorban(listKorban : List<KorbanItem>) {
+        var layoutManager = LinearLayoutManager(this)
         if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.rvResult.layoutManager = GridLayoutManager(this, 2)
-        } else {
-            binding.rvResult.layoutManager = LinearLayoutManager(this)
+            layoutManager = GridLayoutManager(this, 2)
         }
+
+        binding.rvResult.layoutManager = layoutManager
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvResult.addItemDecoration(itemDecoration)
+
         val adapter = ListVictimAdapter(listKorban)
         binding.rvResult.adapter = adapter
-
-        val divider = MaterialDividerItemDecoration(this, applicationContext.resources.configuration.orientation)
-//        divider.dividerInsetStart = 10
-//        divider.dividerInsetEnd = 10
-        binding.rvResult.addItemDecoration(divider)
 
         adapter.setOnItemClickCallback(object : ListVictimAdapter.OnItemClickCallback {
             override fun onItemClicked(korban: KorbanItem) {

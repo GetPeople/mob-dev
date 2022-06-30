@@ -23,7 +23,7 @@ data class KorbanItem(
 	@field:SerializedName("momName")
 	val momName: String? = null,
 
-	@field:SerializedName("photoUrl")
+	@field:SerializedName("image")
 	val photoUrl: String? = null,
 
 	@field:SerializedName("nik")
@@ -32,8 +32,8 @@ data class KorbanItem(
 	@field:SerializedName("birthPlace")
 	val birthPlace: String? = null,
 
-	@field:SerializedName("kontak")
-	val kontak: String? = null,
+	@field:SerializedName("contact")
+	val contact: String? = null,
 
 	@field:SerializedName("gender")
 	val gender: String? = null,

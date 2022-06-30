@@ -41,7 +41,7 @@ class LoadingActivity : AppCompatActivity() {
         setupView()
         setupViewModel()
         playAnimation()
-        //cariKorban()
+        cariKorban()
     }
 
     private fun setupView() {
@@ -60,7 +60,7 @@ class LoadingActivity : AppCompatActivity() {
     private fun setupViewModel() {
         loadingViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[LoadingViewModel::class.java]
 
         loadingViewModel.getUser().observe(this) { user ->
@@ -92,7 +92,7 @@ class LoadingActivity : AppCompatActivity() {
         val file = reduceFileImage(getFile as File)
         val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
         val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-            "photo",
+            "find",
             file.name,
             requestImageFile
         )

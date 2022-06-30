@@ -16,8 +16,7 @@ import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.login.LoginActivity
-import com.dicoding.getpeople.ui.maps.MapsActivity
-import com.dicoding.getpeople.ui.signup.SignupPenggunaActivity
+import com.dicoding.getpeople.ui.signup.SignupViewModel
 
 val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
@@ -25,7 +24,6 @@ class WelcomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWelcomeBinding
     private lateinit var viewModel: WelcomeViewModel
-    private lateinit var user: UserModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,15 +51,16 @@ class WelcomeActivity : AppCompatActivity() {
     private fun setupViewModel() {
         viewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[WelcomeViewModel::class.java]
 
         viewModel.getUser().observe(this) { user ->
-            if (user.isLogin) {
-                startActivity(Intent(this, MapsActivity::class.java))
+            if (!user.isLogin) {
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             }
         }
-
     }
 
     private fun setupAction() {

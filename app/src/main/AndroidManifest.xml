@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GetPeople">
         <activity
-            android:name=".ui.SplashscreenActivity"
+            android:name=".ui.splash.SplashscreenActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>

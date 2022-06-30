@@ -49,7 +49,7 @@ class SignupPetugasActivity : AppCompatActivity() {
     private fun setupViewModel() {
         signupViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[SignupViewModel::class.java]
     }
 

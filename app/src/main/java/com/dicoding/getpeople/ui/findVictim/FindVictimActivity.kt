@@ -118,16 +118,16 @@ class FindVictimActivity : AppCompatActivity() {
     private fun setupViewModel(){
         findVictimViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[FindVictimViewModel::class.java]
 
-//        findVictimViewModel.getUser().observe(this) { user ->
-//            if (!user.isLogin) {
-//                val intent = Intent(this, WelcomeActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
-//            }
-//        }
+        findVictimViewModel.getUser().observe(this) { user ->
+            if (!user.isLogin) {
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }
     }
 
     private fun setupAction() {

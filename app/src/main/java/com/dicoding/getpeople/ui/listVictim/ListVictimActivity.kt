@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.getpeople.R
@@ -38,8 +39,9 @@ class ListVictimActivity : AppCompatActivity() {
         binding = ActivityListVictimBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        supportActionBar?.title = getString(R.string.menu_daftar_korban)
+
         setupViewModel()
-        setupRecyclerView()
         setupAction()
     }
 
@@ -67,7 +69,7 @@ class ListVictimActivity : AppCompatActivity() {
     private fun setupViewModel(){
         listVictimViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[ListVictimViewModel::class.java]
 
         listVictimViewModel.getUser().observe(this) { user ->
@@ -77,6 +79,7 @@ class ListVictimActivity : AppCompatActivity() {
                 startActivity(intent)
             } else {
                 this.user = user
+                setupRecyclerView()
             }
         }
     }
@@ -93,10 +96,12 @@ class ListVictimActivity : AppCompatActivity() {
                         setupListKorban(response.data.listKorban as List<KorbanItem>)
                     }
                     is Result.Error -> {
+                        binding.progressBar.visibility = View.GONE
                         AlertDialog.Builder(this).apply {
                             setTitle(getString(R.string.gagal))
                             setMessage(response.error)
                             setNegativeButton(getString(R.string.tutup)) { _, _ ->
+                                finish()
                             }
                             create()
                             show()
@@ -108,16 +113,14 @@ class ListVictimActivity : AppCompatActivity() {
     }
 
     private fun setupListKorban(listKorban : List<KorbanItem>) {
+        var layoutManager = LinearLayoutManager(this)
         if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            binding.rvResult.layoutManager = GridLayoutManager(this, 2)
-        } else {
-            binding.rvResult.layoutManager = LinearLayoutManager(this)
+            layoutManager = GridLayoutManager(this, 2)
         }
 
-        val divider = MaterialDividerItemDecoration(this, applicationContext.resources.configuration.orientation)
-//        divider.dividerInsetStart = 10
-//        divider.dividerInsetEnd = 10
-        binding.rvResult.addItemDecoration(divider)
+        binding.rvResult.layoutManager = layoutManager
+        val itemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        binding.rvResult.addItemDecoration(itemDecoration)
 
         val adapter = ListVictimAdapter(listKorban)
         binding.rvResult.adapter = adapter
@@ -127,7 +130,6 @@ class ListVictimActivity : AppCompatActivity() {
                 intent.putExtra(DetailVictimActivity.KORBAN, korban)
                 startActivity(intent)
             }
-
         })
     }
 

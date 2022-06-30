@@ -38,7 +38,6 @@ class UserRepository private constructor(
                  idPetugas : String?)
     : LiveData<Result<DefaultResponse>> {
         resultRegister.value = Result.Loading
-        Log.e("UserRepository", "1: " + (resultRegister.value is Result.Loading))
         val registerRequest = UserRequest(name, email, password, role, idPetugas)
         val client = apiService.register(registerRequest)
         client.enqueue(object : Callback<DefaultResponse> {
@@ -46,13 +45,12 @@ class UserRepository private constructor(
                 call: Call<DefaultResponse>,
                 response: Response<DefaultResponse>
             ) {
-                Log.e("UserRepository","Masuk sini 2")
                 if (response.isSuccessful) {
-                    Log.e("UserRepository","Masuk sini 3")
                     _responseRegister.value = response.body()
                     resultRegister.addSource(responseRegister) { resp ->
                         resultRegister.value = Result.Success(resp)
                     }
+                    resultRegister.removeSource(responseRegister)
                 } else {
                     try {
                         val jObjError = JSONObject(response.errorBody()!!.string())
@@ -68,7 +66,6 @@ class UserRepository private constructor(
             }
 
         })
-        Log.e("UserRepository","3: " + (resultRegister.value is Result.Loading))
         return resultRegister
     }
 
@@ -94,6 +91,7 @@ class UserRepository private constructor(
                     resultLogin.addSource(responseLogin) { resp ->
                         resultLogin.value = Result.Success(resp)
                     }
+                    resultLogin.removeSource(responseLogin)
                 } else {
                     try {
                         val jObjError = JSONObject(response.errorBody()!!.string())

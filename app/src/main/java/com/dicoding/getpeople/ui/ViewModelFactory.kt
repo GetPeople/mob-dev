@@ -1,12 +1,11 @@
 package com.dicoding.getpeople.ui
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.dicoding.getpeople.data.repository.UserRepository
 import com.dicoding.getpeople.di.Injection
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.addVictim.AddVictimViewModel
+import com.dicoding.getpeople.ui.detailVictim.DetailVictimViewModel
 import com.dicoding.getpeople.ui.findVictim.FindVictimViewModel
 import com.dicoding.getpeople.ui.listVictim.ListVictimViewModel
 import com.dicoding.getpeople.ui.loading.LoadingViewModel
@@ -16,7 +15,7 @@ import com.dicoding.getpeople.ui.searchResult.SearchResultViewModel
 import com.dicoding.getpeople.ui.signup.SignupViewModel
 import com.dicoding.getpeople.ui.welcome.WelcomeViewModel
 
-class ViewModelFactory(private val pref: UserPreference) :
+class ViewModelFactory private constructor(private val pref: UserPreference) :
     ViewModelProvider.NewInstanceFactory() {
 
     @Suppress("UNCHECKED_CAST")
@@ -49,16 +48,19 @@ class ViewModelFactory(private val pref: UserPreference) :
             modelClass.isAssignableFrom(LoadingViewModel::class.java) -> {
                 LoadingViewModel(pref, Injection.provideVictimRepository()) as T
             }
+            modelClass.isAssignableFrom(DetailVictimViewModel::class.java) -> {
+                DetailVictimViewModel(pref) as T
+            }
             else -> throw IllegalArgumentException("Unknown ViewModel class: " + modelClass.name)
         }
     }
 
-//    companion object {
-//        @Volatile
-//        private var instance: ViewModelFactory? = null
-//        fun getInstance(context: Context): ViewModelFactory =
-//            instance ?: synchronized(this) {
-//                instance ?: ViewModelFactory(Injection.provideRepository(context))
-//            }.also { instance = it }
-//    }
+    companion object {
+        @Volatile
+        private var instance: ViewModelFactory? = null
+        fun getInstance(pref: UserPreference): ViewModelFactory =
+            instance ?: synchronized(this) {
+                instance ?: ViewModelFactory(pref)
+            }.also { instance = it }
+    }
 }

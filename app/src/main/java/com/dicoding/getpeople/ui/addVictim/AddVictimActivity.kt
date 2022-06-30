@@ -10,11 +10,14 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.dicoding.getpeople.databinding.ActivityAddVictimBinding
@@ -24,7 +27,6 @@ import com.dicoding.getpeople.model.UserModel
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
 import com.dicoding.getpeople.ui.camera.CameraActivity
-import com.dicoding.getpeople.ui.listVictim.ListVictimActivity
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.reduceFileImage
 import com.dicoding.getpeople.ui.rotateBitmap
@@ -32,9 +34,6 @@ import com.dicoding.getpeople.ui.uriToFile
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
 import com.google.android.material.datepicker.MaterialDatePicker
-import okhttp3.MediaType.Companion.toMediaTypeOrNull
-import okhttp3.MultipartBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -88,6 +87,7 @@ class AddVictimActivity : AppCompatActivity() {
             )
         }
 
+        setupView()
         setupViewModel()
         setupAction()
     }
@@ -113,21 +113,27 @@ class AddVictimActivity : AppCompatActivity() {
         }
     }
 
+    private fun setupView() {
+        val items = resources.getStringArray(R.array.gender)
+        val adapter = ArrayAdapter(this, R.layout.list_item_gender, items)
+        binding.editTextGender.setAdapter(adapter)
+    }
+
     private fun setupViewModel(){
         addVictimViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[AddVictimViewModel::class.java]
 
-//        addVictimViewModel.getUser().observe(this) { user ->
-//            if (!user.isLogin) {
-//                val intent = Intent(this, WelcomeActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
-//            } else {
-//                this.user = user
-//            }
-//        }
+        addVictimViewModel.getUser().observe(this) { user ->
+            if (!user.isLogin) {
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else {
+                this.user = user
+            }
+        }
     }
 
     private fun setupAction() {
@@ -201,20 +207,13 @@ class AddVictimActivity : AppCompatActivity() {
             val nik = binding.editTextNik.text.toString()
 
             val file = reduceFileImage(getFile as File)
-            val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
-            val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
-                "photo",
-                file.name,
-                requestImageFile
-            )
-
             when {
                 posko.isEmpty() -> {}
                 kontak.isEmpty() -> {}
                 else -> {
                     addVictimViewModel.tambahKorban(
                         user.token,
-                        imageMultipart,
+                        file,
                         posko,
                         kontak,
                         name,

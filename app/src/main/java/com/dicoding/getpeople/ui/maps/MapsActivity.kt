@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatDelegate
@@ -68,17 +69,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private fun setupViewModel() {
         mapsViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[MapsViewModel::class.java]
 
-//        mapsViewModel.getUser().observe(this) { user ->
-//            this.user = user
-//            if (!user.isLogin) {
-//                val intent = Intent(this, WelcomeActivity::class.java)
-//                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-//                startActivity(intent)
-//            }
-//        }
+        mapsViewModel.getUser().observe(this) { user ->
+            this.user = user
+            if (!user.isLogin) {
+                val intent = Intent(this, WelcomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            }
+        }
     }
 
     /**
@@ -101,7 +102,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             if (user.role == "pengguna") {
                 startActivity(Intent(this, FindVictimActivity::class.java))
             } else {
-                startActivity(Intent(this, AddVictimActivity::class.java))
+                startActivity(Intent(this, ListVictimActivity::class.java))
             }
             true
         }

@@ -12,7 +12,6 @@ import com.dicoding.getpeople.data.remote.response.KorbanItem
 import com.dicoding.getpeople.databinding.ActivityDetailVictimBinding
 import com.dicoding.getpeople.model.UserPreference
 import com.dicoding.getpeople.ui.ViewModelFactory
-import com.dicoding.getpeople.ui.addVictim.AddVictimViewModel
 import com.dicoding.getpeople.ui.maps.MapsActivity
 import com.dicoding.getpeople.ui.welcome.WelcomeActivity
 import com.dicoding.getpeople.ui.welcome.dataStore
@@ -26,6 +25,8 @@ class DetailVictimActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailVictimBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.title = getString(R.string.menu_detail_korban)
 
         setupViewModel()
         setupView()
@@ -55,7 +56,7 @@ class DetailVictimActivity : AppCompatActivity() {
     private fun setupViewModel(){
         detailVictimViewModel = ViewModelProvider(
             this,
-            ViewModelFactory(UserPreference.getInstance(dataStore))
+            ViewModelFactory.getInstance(UserPreference.getInstance(dataStore))
         )[DetailVictimViewModel::class.java]
 
         detailVictimViewModel.getUser().observe(this) { user ->
@@ -74,7 +75,7 @@ class DetailVictimActivity : AppCompatActivity() {
             .into(binding.imageviewKorban)
         binding.apply {
             valueLokasi.text = victim?.posko
-            valueKontak.text = victim?.kontak
+            valueKontak.text = victim?.contact
             valueNama.text = victim?.name
             valueGender.text = victim?.gender
             valueTempatLahir.text = victim?.birthPlace

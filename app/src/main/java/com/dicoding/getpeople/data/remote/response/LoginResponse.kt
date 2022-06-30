@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class LoginResponse(
 
-	@field:SerializedName("loginResult")
+	@field:SerializedName("data")
 	val loginResult: LoginResult? = null,
 
 	@field:SerializedName("status")
@@ -29,6 +29,6 @@ data class LoginResult(
 	@field:SerializedName("name")
 	val name: String,
 
-	@field:SerializedName("token")
+	@field:SerializedName("accessToken")
 	val token: String
 ) : Parcelable
