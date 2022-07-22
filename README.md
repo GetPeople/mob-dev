@@ -1,5 +1,39 @@
 # GetPeople Mobile Development
 
+## About
+
+### Description
+
+GetPeople is an app where people can find their families who becomes victim of a natural disaster just by uploading a photo. Powered by an AI, the app will show victims who have the highest similarities. There are 2 types of user, Pengguna who can find victim by uploading photos and Petugas who can add new victim data.
+
+### Preview
+
+![GetPeople Preview 1](photos/GetPeople-1.jpg)
+![GetPeople Preview 2](photos/GetPeople-2.jpg)
+![GetPeople Preview 3](photos/GetPeople-3.jpg)
+![GetPeople Preview 4](photos/GetPeople-4.jpg)
+![GetPeople Preview 5](photos/GetPeople-5.jpg)
+
+### List of Features
+
+1. Splash screen
+2. Welcome page
+3. Signup and Login
+4. Map of Natural Disaster
+5. Find victim by photo (Pengguna only)
+6. Add new victim (Petugas only)
+
+### Dependencies and Tools
+1. Kotlin Extensions (Core, ViewModel, LiveData)
+2. Glide
+3. Material Design
+4. Constraint Layout
+5. CameraX
+6. Retrofit, okhttp3 for API
+7. Kotlin Coroutines
+8. RecylcerView, CardView
+9. Datastore, preferences
+
 ## Getting Started
 
 ### Prerequisite
